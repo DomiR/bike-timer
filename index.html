@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+        <div class="bg green container">
+            <p class="clock">00:00:00</p>
+            <p class="command">go</p>
+        </div>
+
+        <style>
+            body {
+                margin: 0;
+                position: absolute;
+                height: 100%;
+                width: 100%;
+            }
+            p{
+                margin: 0;
+            }
+            .container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+            .container p{
+                color: white;
+                font-size: 3em;
+                font-family: Helventica, sans-serif;
+            }
+            .bg {
+                height: 100%;
+                width: 100%;
+            }
+            .green {
+                background-color: green;
+            }
+            .red {
+                background-color: red;
+            }
+        </style>
+
+        <script src="https://code.jquery.com/jquery-1.12.2.min.js"></script>
+        
+        <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+        <script>
+            $(document).ready(function(){
+                var seconds = 0;
+                var last = 0;
+                var state = 0;
+                function tick(){
+                    seconds++;
+                    last++;
+                    if (state===0 && last===8){
+                        last = 0;
+                        state = 1;
+                        $(".container").addClass("red")
+                        $(".container").removeClass("green")
+                        $(".command").text("stop")
+                    }
+                    if (state===1 && last===12){
+                        last = 0;
+                        state = 0;
+                        $(".container").addClass("green")
+                        $(".container").removeClass("red")
+                        $(".command").text("go")
+                    }
+
+                    var ts = seconds % 60;
+                    var tm = Math.floor((seconds / 60) % 60);
+                    var th = Math.floor((seconds / 3600) % 60);
+                    var dateString = (th<10?"0"+th:th) + ":" + (tm<10?"0"+tm:tm) + ":" + (ts<10?"0"+ts:ts)
+                    $(".clock").text(dateString)
+                }
+                setInterval(tick, 1000);
+            })
+        </script>
+
+    </body>
+</html>
